@@ -42,7 +42,7 @@ function RoomBox() {
 
 function RoomGrid() {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '16px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '16px', margin: '10px'}}>
       <RoomBox />
       <RoomBox />
       <RoomBox />
@@ -98,7 +98,7 @@ function App() {
   return (
     <div className="App">
       <MyNavbar />
-      <DatePicker />
+      <DatePicker/>
       <RoomGrid />
     </div>
   )
