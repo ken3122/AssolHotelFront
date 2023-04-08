@@ -85,7 +85,7 @@ function DatePicker() {
       <p>
         Выбранные даты: c {startDate} по {endDate}
       </p>
-      <Link to="MainPage" className="link" state={[startDate, endDate]}>
+      <Link to="/MainPage" className="link" state={[startDate, endDate]}>
         <button>Найти свободный номер</button>
       </Link>
     </div>
@@ -112,11 +112,8 @@ function MyNavbar() {
 }
 
 function MainPage() {
-  const location = useLocation();
-  const [startDate, endDate] = location.state;
-  // const startDate = location.state[0];
-  // const endDate = location.state[1];
-  // console.log(startDate - endDate);
+  const { state } = useLocation();
+  const [startDate, endDate] = state;
   console.log(startDate, endDate);
   return (
     <div>
@@ -130,8 +127,6 @@ function MainPage() {
 }
 
 function App() {
-  const [startDate, setStartDate] = useState("2022-09-17");
-  const [endDate, setEndDate] = useState("2022-09-17");
 
   return (
     <div className="app">
