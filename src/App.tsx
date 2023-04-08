@@ -85,7 +85,7 @@ function DatePicker() {
       <p>
         Выбранные даты: c {startDate} по {endDate}
       </p>
-      <Link to="MainPage" className="link">
+      <Link to="MainPage" className="link" state={[startDate, endDate]}>
         <button>Найти свободный номер</button>
       </Link>
     </div>
@@ -113,12 +113,17 @@ function MyNavbar() {
 
 function MainPage() {
   const location = useLocation();
-  const startDate = location.state;
-  const endDate = location.state;
-  console.log(startDate - endDate);
+  const [startDate, endDate] = location.state;
+  // const startDate = location.state[0];
+  // const endDate = location.state[1];
+  // console.log(startDate - endDate);
+  console.log(startDate, endDate);
   return (
     <div>
       <MyNavbar />
+      <p>
+        Выбранные даты: c {startDate} по {endDate}
+      </p>
       <RoomGrid />
     </div>
   );
@@ -134,15 +139,15 @@ function App() {
         <Route path="/" element={<DatePicker />}></Route>
         <Route
           path="/MainPage"
-          render={(props) => (
-            <MainPage
-              {...props}
-              startDate={startDate}
-              setStartDate={setStartDate}
-              endDate={endDate}
-              setEndDate={setEndDate}
-            />
-          )}
+          // render={(props) => (
+          //   <MainPage
+          //     {...props}
+          //     startDate={startDate}
+          //     setStartDate={setStartDate}
+          //     endDate={endDate}
+          //     setEndDate={setEndDate}
+          //   />
+          // )}
           element={<MainPage />}
         ></Route>
       </Routes>
