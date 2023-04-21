@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Img from "./images/room1.jpg";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
+
+import { Button } from "@material-tailwind/react";
 
 const rooms = [
   { title: "Комната на первом этаже", isEmpty: true, id: 1 },
@@ -66,28 +68,52 @@ function DatePicker() {
 
   function handleEndDate(e: React.ChangeEvent<HTMLInputElement>) {
     setEndDate(e.target.value);
+
+    useEffect(() => {
+      fetch(`http://localhost:3000/apartments`, { method: "GET" })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+        });
+    }, []);
   }
 
   return (
-    <div className="flex-container">
-      <div className="item">
-        <label>c</label>
-        <input
-          type="date"
-          onChange={handleStartDate}
-          defaultValue="2022-09-17"
-        />
+    <div className="header">
+      <div className="flex-container">
+        <div className="item">
+          <label className="label">c</label>
+          <input
+            type="date"
+            onChange={handleStartDate}
+            defaultValue="2022-09-17"
+          />
+        </div>
+        <div className="item">
+          <label className="label">до</label>
+          <input
+            type="date"
+            onChange={handleEndDate}
+            defaultValue="2022-09-17"
+          />
+        </div>
+        <p className="date-selected">
+          Выбранные даты: c{" "}
+          <b>
+            <u>{startDate}</u>
+          </b>{" "}
+          по{" "}
+          <b>
+            <u>{endDate}</u>
+          </b>
+        </p>
+        <Link to="MainPage" className="link" state={[startDate, endDate]}>
+          <Button size="sm" className="search-button">
+            {" "}
+            Найти свободный номер
+          </Button>
+        </Link>
       </div>
-      <div className="item">
-        <label>до</label>
-        <input type="date" onChange={handleEndDate} defaultValue="2022-09-17" />
-      </div>
-      <p>
-        Выбранные даты: c {startDate} по {endDate}
-      </p>
-      <Link to="MainPage" className="link" state={[startDate, endDate]}>
-        <button>Найти свободный номер</button>
-      </Link>
     </div>
   );
 }
@@ -129,28 +155,41 @@ function MainPage() {
   );
 }
 
+interface Apartment {
+  id: number;
+  name: string;
+  description: string;
+  pricePerNight: number;
+}
+
 function App() {
   const [startDate, setStartDate] = useState("2022-09-17");
   const [endDate, setEndDate] = useState("2022-09-17");
+  const [apartments, setApartments] = useState<Apartment[]>([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/apartments`, { method: "GET" })
+      .then((response) => response.json())
+      .then((response: Apartment[]) => {
+        setApartments(response);
+      });
+  }, []);
 
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<DatePicker />}></Route>
-        <Route
-          path="/MainPage"
-          // render={(props) => (
-          //   <MainPage
-          //     {...props}
-          //     startDate={startDate}
-          //     setStartDate={setStartDate}
-          //     endDate={endDate}
-          //     setEndDate={setEndDate}
-          //   />
-          // )}
-          element={<MainPage />}
-        ></Route>
+        <Route path="/" element={<DatePicker />} />
+        <Route path="/MainPage" element={<MainPage />} />
       </Routes>
+      <div>
+        {apartments.map((apartment) => (
+          <div key={apartment.id}>
+            <h2>{apartment.name}</h2>
+            <p>{apartment.description}</p>
+            <p>{apartment.pricePerNight}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
