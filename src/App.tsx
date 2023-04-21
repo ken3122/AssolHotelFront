@@ -138,11 +138,8 @@ function MyNavbar() {
 }
 
 function MainPage() {
-  const location = useLocation();
-  const [startDate, endDate] = location.state;
-  // const startDate = location.state[0];
-  // const endDate = location.state[1];
-  // console.log(startDate - endDate);
+  const { state } = useLocation();
+  const [startDate, endDate] = state;
   console.log(startDate, endDate);
   return (
     <div>
