@@ -12,6 +12,11 @@
   padding: 2em;
 }
 
+.new-apartment-button {
+  margin-top: 3em;
+  margin-left: 7em;
+}
+
 .flex-container {
   display: flex;
   flex-direction: row;
@@ -117,4 +122,10 @@
   font-size: x-large;
   font-weight: bold;
   padding-left: 0.6rem;
+}
+
+.mainButton {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
 }

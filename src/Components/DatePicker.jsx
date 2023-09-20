@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "React";
 import "./App.css";
 import { Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
@@ -7,15 +7,11 @@ export function DatePicker() {
   const [startDate, setStartDate] = useState("2022-09-17");
   const [endDate, setEndDate] = useState("2022-09-17");
 
-  function handleStartDate(
-    e: React.ChangeEvent<HTMLInputElement> /*TypeScript target property defined */
-  ) {
+  function handleStartDate() {
     setStartDate(e.target.value);
   }
 
-  function handleEndDate(
-    e: React.ChangeEvent<HTMLInputElement> /*TypeScript target property defined */
-  ) {
+  function handleEndDate() {
     setEndDate(e.target.value);
   }
 
